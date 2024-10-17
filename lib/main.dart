@@ -35,7 +35,7 @@ class AtmScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   TextField(
-                    //controller: amountController,
+                    controller: amountController,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       hintText: '1 234.00 руб',
@@ -54,6 +54,23 @@ class AtmScreen extends StatelessWidget {
                     ),
                     child: const Text('Выдать сумму', style: TextStyle(fontSize: 18)),
                   ),
+                  SizedBox(height: 16),
+                  if (state is AtmErrorState) ...[
+                    Text(
+                      state.error,
+                      style: TextStyle(color: Colors.red, fontSize: 18),
+                    ),
+                  ] else if (state is AtmSuccessState) ...[
+                    const Text(
+                      'Банкомат выдал следующие купюры:',
+                      style: TextStyle(fontSize: 18, color: Colors.black),
+                    ),
+                    for (var note in state.issuedNotes)
+                      Text(
+                        note,
+                        style: const TextStyle(fontSize: 16, color: Colors.black54),
+                      ),
+                  ],
                   const SizedBox(height: 16),
                   const Text(
                     'Баланс банкомата:',
